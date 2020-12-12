@@ -25,6 +25,12 @@ function loadInput() {
     }
 }
 
+function isInputValid(input) {
+    if (!input.number)
+        return false;
+    return true;
+}
+
 function buildQueryParams(data) {
     let output = [];
 
@@ -42,6 +48,11 @@ function buildQueryParams(data) {
 
 function reload() {
     const data = loadInput();
+
+    // Only fetch API when input is valid
+    if (!isInputValid(data))
+        return;
+
     const query = buildQueryParams(data);
 
     let result = '';
