@@ -45,17 +45,23 @@ function reload() {
     const query = buildQueryParams(data);
 
     let result = '';
+    let isError = false;
     fetch('/read' + query)
-    .then(data => {
-        return data.json();
-    })
-    .then(jsonObj => {
-        result = jsonObj.result;
-    })
-    .catch(err => {
-        result = err;
-    })
-    .finally(() => {
-        outputElem.innerText = result;
-    });
+        .then(response => {
+            isError = !response.ok;
+            return response.json();
+        })
+        .then(jsonObj => {
+            if (!isError)
+                result = jsonObj.text;
+            else
+                result = jsonObj.error;
+        })
+        .finally(() => {
+            if (isError)
+                outputElem.style.color = 'red';
+            else
+                outputElem.style.color = '';
+            outputElem.innerText = result;
+        });
 }

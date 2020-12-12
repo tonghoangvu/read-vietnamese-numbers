@@ -94,7 +94,7 @@ function parseNumberData(numberStr: string): INumberData {
     for (let i: number = 0; i < fullStr.length; i++) {
         let digit: number = parseInt(fullStr[i]);
         if (isNaN(digit))
-            throw new Error('Can not parse numberic string at ' + i);
+            throw new Error(`Số không hợp lệ`);
         digits.push(digit);
     }
 

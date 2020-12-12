@@ -37,9 +37,9 @@ ReadRouter.get('/read', function (req: express.Request, res: express.Response) {
         const result: string = Reader.readVietnameseNumber(numberData, config);
 
         // Return JSON
-        return res.json({ result });
+        return res.json({ text: result });
     } catch (e) {
-        return res.json({ 'error': e.message });
+        return res.status(400).json({ error: e.message });
     }
 });
 
