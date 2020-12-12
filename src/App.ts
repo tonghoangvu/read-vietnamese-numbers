@@ -1,11 +1,13 @@
 import * as path from 'path';
 import * as express from 'express';
 import * as helmet from 'helmet';
+import * as dotenv from 'dotenv';
 
 import Logger from './Logger';
 import ReadRouter from './ReadRouter';
 
 const App = express();
+dotenv.config();
 
 // Security
 App.disable('x-powered-by');
@@ -27,7 +29,7 @@ App.use(function (req, res) {
 });
 
 // Start server
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 App.listen(PORT, function () {
     console.log(`Server is running at ${ PORT }`);
 });
