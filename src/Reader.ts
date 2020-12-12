@@ -87,7 +87,8 @@ function readVietnameseNumbers(number: number, config: IReadConfig) {
         let c: number = parseInt(fullNumStr[i * 3 + 2]);
 
         let isFirstPart: boolean = i == 0;
-        if (a != 0 || b != 0 || c != 0 || !config.skipEmptyPart)
+        let isSinglePart: boolean = partCount == 1;
+        if (a != 0 || b != 0 && c != 0 || !config.skipEmptyPart || isSinglePart)
             output.push(
                 ...readThreeDigits(a, b, c, !isFirstPart),
                 ...VN_UNITS[partCount - i - 1]);
