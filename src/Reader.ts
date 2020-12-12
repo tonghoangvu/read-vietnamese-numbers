@@ -1,9 +1,13 @@
 import IReadConfig from './IReadConfig';
+import INumberData from './INumberData';
+
+const DIGITS_PER_PART: number = 3;
 
 const VN_DIGITS: string[] = [
     'không', 'một', 'hai', 'ba', 'bốn',
     'năm', 'sáu', 'bảy', 'tám', 'chín'
 ];
+
 const VN_UNITS: string[][] = [
     [], ['nghìn'], ['triệu'], ['tỉ'],
     ['nghìn', 'tỉ'], ['triệu', 'tỉ'], ['tỉ', 'tỉ']
@@ -62,40 +66,63 @@ function readThreeDigits(a, b, c: number, readZeroHundred: boolean): string[] {
     return output;
 }
 
-function readVietnameseNumbers(number: number, config: IReadConfig) {
-    let output: string[] = [];
-    let negativeNumber: boolean = number < 0;
+function parseNumberData(numberStr: string): INumberData {
+    // Remove negative sign
+    let isNegative: boolean = numberStr[0] == '-';
+    let rawStr = (isNegative) ? numberStr.substr(1) : numberStr;
 
-    // Find count of need zero
-    const rawNumStr: string = Math.abs(number).toString();
+    // Remove leading 0s
+    let pos: number = 0;
+    while (rawStr[pos] == '0')
+        pos++;
+    rawStr = rawStr.substr(pos);
+
+    // Count 0s to add
     let needZeroCount: number = 0;
-    const modZeroCount: number = rawNumStr.length % 3;
+    const modZeroCount: number = rawStr.length % DIGITS_PER_PART;
     if (modZeroCount != 0)
-        needZeroCount = 3 - modZeroCount;
+        needZeroCount = DIGITS_PER_PART - modZeroCount;
 
-    // Append need zeros before
-    let fullNumStr: string = '';
+    // Add leading 0s to fit parts
+    let fullStr = '';
     for (let i: number = 0; i < needZeroCount; i++)
-        fullNumStr += '0';
-    fullNumStr += rawNumStr;
+        fullStr += '0';
+    fullStr += rawStr;
 
-    // Split each 3 elements
-    let partCount: number = Math.round(fullNumStr.length / 3);
+    // Parse digits
+    let digits: number[] = [];
+    for (let i: number = 0; i < fullStr.length; i++) {
+        let digit: number = parseInt(fullStr[i]);
+        if (isNaN(digit))
+            throw new Error('Can not parse numberic string at ' + i);
+        digits.push(digit);
+    }
+
+    // Building result
+    let result: INumberData = { isNegative, digits };
+    return result;
+}
+
+function readVietnameseNumber(numberData: INumberData, config: IReadConfig) {
+    let output: string[] = [];
+
+    let partCount: number = Math.round(numberData.digits.length / DIGITS_PER_PART);
+
     for (let i: number = 0; i < partCount; i++) {
-        let a: number = parseInt(fullNumStr[i * 3]);
-        let b: number = parseInt(fullNumStr[i * 3 + 1]);
-        let c: number = parseInt(fullNumStr[i * 3 + 2]);
+        let a: number = numberData.digits[i * DIGITS_PER_PART];
+        let b: number = numberData.digits[i * DIGITS_PER_PART + 1];
+        let c: number = numberData.digits[i * DIGITS_PER_PART + 2];
 
         let isFirstPart: boolean = i == 0;
         let isSinglePart: boolean = partCount == 1;
-        if (a != 0 || b != 0 && c != 0 || !config.skipEmptyPart || isSinglePart)
+        if (a != 0 || b != 0 || c != 0 || !config.skipEmptyPart || isSinglePart)
             output.push(
                 ...readThreeDigits(a, b, c, !isFirstPart),
                 ...VN_UNITS[partCount - i - 1]);
     }
 
     // Build result as string
-    if (negativeNumber)
+    if (numberData.isNegative)
         output.unshift('âm');
     output.push(config.unit);
     let result: string = output.join(config.separator);
@@ -103,4 +130,6 @@ function readVietnameseNumbers(number: number, config: IReadConfig) {
     return result;
 }
 
-export default { readTwoDigits, readThreeDigits, readVietnameseNumbers };
+export default {
+    readTwoDigits, readThreeDigits, parseNumberData, readVietnameseNumber
+}

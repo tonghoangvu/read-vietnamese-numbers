@@ -1,5 +1,6 @@
 import * as express from 'express';
 
+import INumberData from './INumberData';
 import IReadConfig from './IReadConfig';
 import Reader from './Reader';
 
@@ -13,8 +14,8 @@ ReadRouter.get('/read', function (req: express.Request, res: express.Response) {
 
     // Required params
     if (!paramNumber)
-        res.end();
-    const number: number = parseInt(paramNumber.toString());
+        return res.end();
+    const numberStr: string = paramNumber.toString();
 
     // Optional params
     const separator: string = (paramSeparator)
@@ -24,12 +25,22 @@ ReadRouter.get('/read', function (req: express.Request, res: express.Response) {
     const skipEmptyPart: boolean = (paramSkipEmptyPart)
         ? paramSkipEmptyPart == '1' : true;
 
-    // Build config
-    const config: IReadConfig = { separator, unit, skipEmptyPart };
-    const result: string = Reader.readVietnameseNumbers(number, config);
+    // Try parse to number data
+    let numberData: INumberData;
+    try {
+        numberData = Reader.parseNumberData(numberStr);
 
-    // Return JSON
-    res.json({ result });
+        // Build config
+        const config: IReadConfig = { separator, unit, skipEmptyPart };
+
+        // Generate result
+        const result: string = Reader.readVietnameseNumber(numberData, config);
+
+        // Return JSON
+        return res.json({ result });
+    } catch (e) {
+        return res.json({ 'error': e.message });
+    }
 });
 
 export default ReadRouter;
