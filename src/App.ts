@@ -23,13 +23,13 @@ App.use(ReadRouter);
 App.use(express.static(path.join(__dirname, '../demo')));
 
 // Otherwise, Redirect to GitHub repository
-const GITHUB_URL = 'https://github.com/tonghoangvu/read-vietnamese-numbers';
-App.use(function (req, res) {
+const GITHUB_URL: string = 'https://github.com/tonghoangvu/read-vietnamese-numbers';
+App.use(function (req: express.Request, res: express.Response) {
     res.redirect(GITHUB_URL);
 });
 
 // Start server
-const PORT = process.env.PORT || 3000;
+const PORT: number = parseInt(process.env.PORT) || 3000;
 App.listen(PORT, function () {
     console.log(`Server is running at ${ PORT }`);
 });

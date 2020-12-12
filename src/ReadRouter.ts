@@ -21,7 +21,7 @@ ReadRouter.get('/read', function (req: express.Request, res: express.Response) {
         ? paramSeparator.toString() : ' ';
     const unit: string = (paramUnit)
         ? paramUnit.toString() : 'đơn vị';
-    const skipEmptyPart = (paramSkipEmptyPart)
+    const skipEmptyPart: boolean = (paramSkipEmptyPart)
         ? paramSkipEmptyPart == '1' : true;
 
     // Build config
