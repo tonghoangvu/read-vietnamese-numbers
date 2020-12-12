@@ -64,9 +64,10 @@ function readThreeDigits(a, b, c: number, readZeroHundred: boolean): string[] {
 
 function readVietnameseNumbers(number: number, config: IReadConfig) {
     let output: string[] = [];
+    let negativeNumber: boolean = number < 0;
 
     // Find count of need zero
-    const rawNumStr: string = number.toString();
+    const rawNumStr: string = Math.abs(number).toString();
     let needZeroCount: number = 0;
     const modZeroCount: number = rawNumStr.length % 3;
     if (modZeroCount != 0)
@@ -93,6 +94,8 @@ function readVietnameseNumbers(number: number, config: IReadConfig) {
     }
 
     // Build result as string
+    if (negativeNumber)
+        output.unshift('âm');
     output.push(config.unit);
     let result: string = output.join(config.separator);
 
