@@ -12,7 +12,9 @@ dotenv.config();
 
 // Security
 App.disable('x-powered-by');
-App.use(helmet());
+App.use(helmet({
+    contentSecurityPolicy: false
+}));
 
 // Logging
 App.use(Logger);
