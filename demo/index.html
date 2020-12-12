@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read Vietnamese numbers demo</title>
+
+    <script src="/index.js" defer></script>
+    <style>
+        .part { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="part">
+        <label for="numberElem">Số cần đọc</label>
+        <input id="numberElem" type="number" min="0" placeholder="Nhập số cần đọc">
+    </div>
+    <div class="part">
+        <label for="separatorElem">Dấu phân cách (mặc định là khoảng trắng)</label>
+        <input id="separatorElem" type="number" min="0" placeholder="Dấu phân cách">
+    </div>
+    <div class="part">
+        <label for="unitElem">Đơn vị tính</label>
+        <input id="unitElem" type="text" value="đơn vị" placeholder="Đơn vị tính">
+    </div>
+    <div class="part">
+        <input type="checkbox" id="skipEmptyPartElem" checked>
+        <label>Bỏ qua các phần rỗng</label>
+    </div>
+    <div class="part">
+        <button id="readElem">Đọc số</button>
+    </div>
+    <p id="outputElem"></p>
+</body>
+</html>
