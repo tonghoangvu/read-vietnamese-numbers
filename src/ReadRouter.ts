@@ -23,7 +23,7 @@ ReadRouter.get('/read', function (req: express.Request, res: express.Response) {
         ? paramUnit.toString() : 'đơn vị';
     const skipEmptyPart = (paramSkipEmptyPart)
         ? paramSkipEmptyPart == '1' : true;
-    
+
     // Build config
     const config: IReadConfig = { separator, unit, skipEmptyPart };
     const result: string = Reader.readVietnameseNumbers(number, config);

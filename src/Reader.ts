@@ -43,7 +43,7 @@ function readTwoDigits(b, c: number, hasHundred: boolean): string[] {
                 output.push(VN_DIGITS[c]);
             break;
         }
-    } 
+    }
 
     return output;
 }
