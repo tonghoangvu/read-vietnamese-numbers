@@ -94,7 +94,6 @@ function readVietnameseNumbers(number: number, config: IReadConfig) {
 
     // Build result as string
     output.push(config.unit);
-    console.log(output);
     let result: string = output.join(config.separator);
 
     return result;
