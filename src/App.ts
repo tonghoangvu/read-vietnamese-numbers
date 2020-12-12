@@ -6,6 +6,7 @@ import * as dotenv from 'dotenv';
 import Logger from './Logger';
 import ReadRouter from './ReadRouter';
 
+// Init
 const App = express();
 dotenv.config();
 
@@ -20,7 +21,7 @@ App.use(Logger);
 App.use(ReadRouter);
 
 // Serve static files for demo
-App.use(express.static(path.join(__dirname, '../demo')));
+App.use(express.static(path.join(__dirname, '..', 'demo')));
 
 // Start server
 const PORT: number = parseInt(process.env.PORT) || 3000;

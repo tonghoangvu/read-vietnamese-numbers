@@ -85,16 +85,18 @@ function parseNumberData(numberStr: string): INumberData {
 
     // Add leading 0s to fit parts
     let fullStr = '';
-    for (let i: number = 0; i < needZeroCount; i++)
+    let i: number;
+    for (i = 0; i < needZeroCount; i++)
         fullStr += '0';
     fullStr += rawStr;
 
     // Parse digits
+    let digit: number;
     let digits: number[] = [];
-    for (let i: number = 0; i < fullStr.length; i++) {
-        let digit: number = parseInt(fullStr[i]);
+    for (i = 0; i < fullStr.length; i++) {
+        digit = parseInt(fullStr[i]);
         if (isNaN(digit))
-            throw new Error(`Số không hợp lệ`);
+            throw new Error('Số không hợp lệ');
         digits.push(digit);
     }
 
@@ -106,28 +108,30 @@ function parseNumberData(numberStr: string): INumberData {
 function readVietnameseNumber(numberData: INumberData, config: IReadConfig) {
     let output: string[] = [];
 
+    let i: number, a: number, b: number, c: number;
+    let isFirstPart: boolean, isSinglePart: boolean;
     let partCount: number = Math.round(numberData.digits.length / DIGITS_PER_PART);
 
-    for (let i: number = 0; i < partCount; i++) {
-        let a: number = numberData.digits[i * DIGITS_PER_PART];
-        let b: number = numberData.digits[i * DIGITS_PER_PART + 1];
-        let c: number = numberData.digits[i * DIGITS_PER_PART + 2];
+    for (i = 0; i < partCount; i++) {
+        a = numberData.digits[i * DIGITS_PER_PART];
+        b = numberData.digits[i * DIGITS_PER_PART + 1];
+        c = numberData.digits[i * DIGITS_PER_PART + 2];
 
-        let isFirstPart: boolean = i == 0;
-        let isSinglePart: boolean = partCount == 1;
+        isFirstPart = i == 0;
+        isSinglePart = partCount == 1;
         if (a != 0 || b != 0 || c != 0 || !config.skipEmptyPart || isSinglePart)
             output.push(
                 ...readThreeDigits(a, b, c, !isFirstPart),
                 ...VN_UNITS[partCount - i - 1]);
     }
 
-    // Build result as string
+    // Add sign and units
     if (numberData.isNegative)
         output.unshift('âm');
     output.push(config.unit);
-    let result: string = output.join(config.separator);
 
-    return result;
+    // Return joined result
+    return output.join(config.separator);
 }
 
 export default {

@@ -7,6 +7,7 @@ import Reader from './Reader';
 const ReadRouter: express.Router = express.Router();
 
 ReadRouter.get('/read', function (req: express.Request, res: express.Response) {
+    // Read query params
     const paramNumber = req.query['number'];
     const paramSeparator = req.query['separator'];
     const paramUnit = req.query['unit'];
@@ -17,7 +18,7 @@ ReadRouter.get('/read', function (req: express.Request, res: express.Response) {
         return res.end();
     const numberStr: string = paramNumber.toString();
 
-    // Optional params
+    // Optional params (has default values)
     const separator: string = (paramSeparator)
         ? paramSeparator.toString() : ' ';
     const unit: string = (paramUnit)
