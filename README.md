@@ -29,7 +29,6 @@ API có thêm các query param để tùy chỉnh kết quả trả về:
 
 * `separator`: dấu phân cách giữa các từ (mặc định là khoảng trắng). Ví dụ separator là dấu *_* thì kết quả của *123* là *một_trăm_hai_mươi_ba_đơn_vị*
 * `unit`: đơn vị tính ở cuối cùng (mặc định là đơn vị). Ví dụ unit là *đồng* thì kết quả của *1000000* là *một triệu đồng*
-* `skip-empty-part`: là 1 hoặc 0, quy định có bỏ qua các phần trống (ở giữa) hay không (mặc định là 1). Ví dụ *1000200* nếu không bỏ qua đọc là *một triệu không nghìn hai trăm đơn vị*, còn nếu bỏ qua phần trống thì đọc là *một triệu hai trăm đơn vị"
 
 ### Installation
 

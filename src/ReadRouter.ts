@@ -9,7 +9,6 @@ const ReadRouter: express.Router = express.Router();
 const NUMBER_QUERY_PARAM: string = 'number';
 const SEPARATOR_QUERY_PARAM: string = 'separator';
 const UNIT_QUERY_PARAM: string = 'unit';
-const SKIP_QUERY_PARAM: string = 'skip-empty-part';
 
 const DEFAULT_SEPARATOR: string = ' ';
 const DEFAULT_UNIT: string = 'đơn vị';
@@ -19,13 +18,11 @@ ReadRouter.get('/read', function (req: express.Request, res: express.Response) {
     const paramNumber = req.query[NUMBER_QUERY_PARAM];
     const paramSeparator = req.query[SEPARATOR_QUERY_PARAM];
     const paramUnit = req.query[UNIT_QUERY_PARAM];
-    const paramSkipEmptyPart = req.query[SKIP_QUERY_PARAM];
 
     // Required params
-    if (!paramNumber || !paramSkipEmptyPart)
+    if (!paramNumber)
         return res.end();
     const numberStr: string = paramNumber.toString();
-    const skipEmptyPart: boolean = paramSkipEmptyPart == '1';
 
     // Optional params (has default values)
     const separator: string = (paramSeparator)
@@ -39,7 +36,7 @@ ReadRouter.get('/read', function (req: express.Request, res: express.Response) {
         numberData = Reader.parseNumberData(numberStr);
 
         // Build config
-        const config: IReadConfig = { separator, unit, skipEmptyPart };
+        const config: IReadConfig = { separator, unit };
 
         // Generate result
         const result: string = Reader.readVietnameseNumber(numberData, config);

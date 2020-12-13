@@ -2,7 +2,6 @@
 const numberElem = document.getElementById('numberElem');
 const separatorElem = document.getElementById('separatorElem');
 const unitElem = document.getElementById('unitElem');
-const skipEmptyPartElem = document.getElementById('skipEmptyPartElem');
 
 const readElem = document.getElementById('readElem');
 const outputElem = document.getElementById('outputElem');
@@ -11,7 +10,6 @@ const outputElem = document.getElementById('outputElem');
 numberElem.addEventListener('change', reload);
 separatorElem.addEventListener('change', reload);
 unitElem.addEventListener('change', reload);
-skipEmptyPartElem.addEventListener('change', reload);
 readElem.addEventListener('click', reload);
 
 // Functions
@@ -20,8 +18,7 @@ function loadInput() {
     return {
         number: numberElem.value,
         separator: separatorElem.value,
-        unit: unitElem.value,
-        skipEmptyPart: skipEmptyPartElem.checked ? 1 : 0
+        unit: unitElem.value
     }
 }
 
@@ -37,7 +34,6 @@ function buildQueryParams(data) {
 
     // Don't check these fields (always included)
     output.push('number=' + data.number);
-    output.push('skip-empty-part=' + data.skipEmptyPart);
 
     // Check not empty (they have default values)
     if (data.separator)

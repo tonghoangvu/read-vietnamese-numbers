@@ -129,7 +129,7 @@ function readVietnameseNumber(numberData: INumberData, config: IReadConfig) {
 
         isFirstPart = i == 0;
         isSinglePart = partCount == 1;
-        if (a != 0 || b != 0 || c != 0 || !config.skipEmptyPart || isSinglePart)
+        if (a != 0 || b != 0 || c != 0 || isSinglePart)
             output.push(
                 ...readThreeDigits(a, b, c, !isFirstPart),
                 ...VN_UNITS[partCount - i - 1]);
