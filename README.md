@@ -17,6 +17,43 @@ Trang web có thể đọc được các số tiếng Việt:
 
 Tuy nhiên API vẫn chưa hỗ trợ đọc số thập phân, sẽ được cải tiến sau.
 
+### API
+
+API duy nhất dùng để đọc chuỗi số thành chữ trong tiếng Việt.
+
+```
+/read?number=-00012345
+```
+
+API có thêm các query param để tùy chỉnh kết quả trả về:
+
+* `separator`: dấu phân cách giữa các từ (mặc định là khoảng trắng). Ví dụ separator là dấu *_* thì kết quả của *123* là *một_trăm_hai_mươi_ba_đơn_vị*
+* `unit`: đơn vị tính ở cuối cùng (mặc định là đơn vị). Ví dụ unit là *đồng* thì kết quả của *1000000* là *một triệu đồng*
+* `skip-empty-part`: là 1 hoặc 0, quy định có bỏ qua các phần trống (ở giữa) hay không (mặc định là 1). Ví dụ *1000200* nếu không bỏ qua đọc là *một triệu không nghìn hai trăm đơn vị*, còn nếu bỏ qua phần trống thì đọc là *một triệu hai trăm đơn vị"
+
+### Installation
+
+**Step 1**: Cài đặt các dependency cần thiết (dùng NPM hoặc Yarn)
+
+```
+npm install
+yarn install
+```
+
+**Step 2**: Để chạy server trên môi trường test (local)
+
+```
+npm run dev
+yarn run dev
+```
+
+**Step 3**: Chạy server trên VPS hoặc server (production)
+
+```
+npm run start
+yarn run start
+```
+
 ### Support
 
 Hãy star cho repository này hoặc follow tôi nếu bạn thấy hay nhé!
