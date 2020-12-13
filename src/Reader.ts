@@ -25,7 +25,7 @@ const VN_UNITS: string[][] = [
     ['nghìn', 'tỉ'], ['triệu', 'tỉ'], ['tỉ', 'tỉ']
 ];
 
-function readTwoDigits(b, c: number, hasHundred: boolean): string[] {
+function readTwoDigits(b: number, c: number, hasHundred: boolean): string[] {
     let output: string[] = [];
 
     switch (b) {
@@ -64,7 +64,7 @@ function readTwoDigits(b, c: number, hasHundred: boolean): string[] {
     return output;
 }
 
-function readThreeDigits(a, b, c: number, readZeroHundred: boolean): string[] {
+function readThreeDigits(a: number, b: number, c: number, readZeroHundred: boolean): string[] {
     let output: string[] = [];
 
     // Read hundred even zero, apply for all parts, except the first part (on the left)
