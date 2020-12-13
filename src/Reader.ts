@@ -1,7 +1,19 @@
 import IReadConfig from './IReadConfig';
 import INumberData from './INumberData';
 
+const NEGATIVE_SIGN: string = '-';
 const DIGITS_PER_PART: number = 3;
+const FILLED_DIGIT: string = '0';
+const INVALID_NUMBER: string = 'Số không hợp lệ';
+
+const NEGATIVE_WORD: string = 'âm';
+const ODD_WORD: string = 'lẻ';
+const HUNDRED_WORD: string = 'trăm';
+const TEN_WORD: string = 'mười';
+const TEN_TONE_WORD: string = 'mươi';
+const ONE_TONE_WORD: string = 'mốt';
+const FOUR_TONE_WORD: string = 'tư';
+const FIVE_TONE_WORD: string = 'lăm';
 
 const VN_DIGITS: string[] = [
     'không', 'một', 'hai', 'ba', 'bốn',
@@ -21,28 +33,28 @@ function readTwoDigits(b, c: number, hasHundred: boolean): string[] {
             if (hasHundred && c == 0)
                 break;
             if (hasHundred)
-                output.push('lẻ');
+                output.push(ODD_WORD);
             output.push(VN_DIGITS[c]);
             break;
         }
 
         case 1: {
-            output.push('mười');
+            output.push(TEN_WORD);
             if (c == 5)
-                output.push('lăm');
+                output.push(FIVE_TONE_WORD);
             else if (c != 0)
                 output.push(VN_DIGITS[c]);
             break;
         }
 
         default: {
-            output.push(VN_DIGITS[b], 'mươi');
+            output.push(VN_DIGITS[b], TEN_TONE_WORD);
             if (c == 1)
-                output.push('mốt');
+                output.push(ONE_TONE_WORD);
             else if (c == 4 && b != 4)
-                output.push('tư');
+                output.push(FOUR_TONE_WORD);
             else if (c == 5)
-                output.push('lăm');
+                output.push(FIVE_TONE_WORD);
             else if (c != 0)
                 output.push(VN_DIGITS[c]);
             break;
@@ -55,11 +67,9 @@ function readTwoDigits(b, c: number, hasHundred: boolean): string[] {
 function readThreeDigits(a, b, c: number, readZeroHundred: boolean): string[] {
     let output: string[] = [];
 
-    if (a == 0) {
-        if (readZeroHundred)
-            output.push('không', 'trăm');
-    } else
-        output.push(VN_DIGITS[a], 'trăm');
+    // Read hundred even zero, apply for all parts, except the first part (on the left)
+    if (a != 0 || readZeroHundred)
+        output.push(VN_DIGITS[a], HUNDRED_WORD);
 
     output.push(...readTwoDigits(b, c, a != 0 || readZeroHundred));
 
@@ -68,12 +78,12 @@ function readThreeDigits(a, b, c: number, readZeroHundred: boolean): string[] {
 
 function parseNumberData(numberStr: string): INumberData {
     // Remove negative sign
-    let isNegative: boolean = numberStr[0] == '-';
+    let isNegative: boolean = numberStr[0] == NEGATIVE_SIGN;
     let rawStr = (isNegative) ? numberStr.substr(1) : numberStr;
 
     // Remove leading 0s
     let pos: number = 0;
-    while (rawStr[pos] == '0')
+    while (rawStr[pos] == FILLED_DIGIT)
         pos++;
     rawStr = rawStr.substr(pos);
 
@@ -87,7 +97,7 @@ function parseNumberData(numberStr: string): INumberData {
     let fullStr = '';
     let i: number;
     for (i = 0; i < needZeroCount; i++)
-        fullStr += '0';
+        fullStr += FILLED_DIGIT;
     fullStr += rawStr;
 
     // Parse digits
@@ -96,7 +106,7 @@ function parseNumberData(numberStr: string): INumberData {
     for (i = 0; i < fullStr.length; i++) {
         digit = parseInt(fullStr[i]);
         if (isNaN(digit))
-            throw new Error('Số không hợp lệ');
+            throw new Error(INVALID_NUMBER);
         digits.push(digit);
     }
 
@@ -127,7 +137,7 @@ function readVietnameseNumber(numberData: INumberData, config: IReadConfig) {
 
     // Add sign and units
     if (numberData.isNegative)
-        output.unshift('âm');
+        output.unshift(NEGATIVE_WORD);
     output.push(config.unit);
 
     // Return joined result

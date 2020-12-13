@@ -13,7 +13,7 @@ dotenv.config();
 // Security
 App.disable('x-powered-by');
 App.use(helmet({
-    contentSecurityPolicy: false
+    contentSecurityPolicy: false  // Disable auto-upgrade insecure request
 }));
 
 // Logging
