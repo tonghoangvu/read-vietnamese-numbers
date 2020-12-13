@@ -26,6 +26,7 @@ function loadInput() {
 }
 
 function isInputValid(input) {
+    // Required fields must be filled
     if (!input.number)
         return false;
     return true;
@@ -34,14 +35,15 @@ function isInputValid(input) {
 function buildQueryParams(data) {
     let output = [];
 
-    if (data.number)
-        output.push('number=' + data.number);
+    // Don't check these fields (always included)
+    output.push('number=' + data.number);
+    output.push('skip-empty-part=' + data.skipEmptyPart);
+
+    // Check not empty (they have default values)
     if (data.separator)
         output.push('separator=' + data.separator);
     if (data.unit)
         output.push('unit=' + data.unit);
-    if (data.skipEmptyPart)
-        output.push('skip-empty-part=' + data.skipEmptyPart);
 
     return '?' + output.join('&');
 }

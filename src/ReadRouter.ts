@@ -14,17 +14,16 @@ ReadRouter.get('/read', function (req: express.Request, res: express.Response) {
     const paramSkipEmptyPart = req.query['skip-empty-part'];
 
     // Required params
-    if (!paramNumber)
+    if (!paramNumber || !paramSkipEmptyPart)
         return res.end();
     const numberStr: string = paramNumber.toString();
+    const skipEmptyPart: boolean = paramSkipEmptyPart == '1';
 
     // Optional params (has default values)
     const separator: string = (paramSeparator)
         ? paramSeparator.toString() : ' ';
     const unit: string = (paramUnit)
         ? paramUnit.toString() : 'đơn vị';
-    const skipEmptyPart: boolean = (paramSkipEmptyPart)
-        ? paramSkipEmptyPart == '1' : true;
 
     // Try parse to number data
     let numberData: INumberData;
