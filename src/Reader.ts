@@ -118,7 +118,7 @@ function parseNumberData(numberStr: string): INumberData {
 
     pointPos = fullStr.indexOf(POINT_SIGN);
     for (i = 0; i < fullStr.length; i++)
-        if (fullStr[i] != POINT_SIGN) {
+        if (i != pointPos) {
             digit = parseInt(fullStr[i]);
             if (isNaN(digit))
                 throw new Error(INVALID_NUMBER);
