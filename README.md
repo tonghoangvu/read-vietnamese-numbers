@@ -10,12 +10,10 @@ Live demo: [http://103.110.84.48:8080/](http://103.110.84.48:8080/)
 ### Features
 
 Trang web có thể đọc được các số tiếng Việt:
-* Số âm, số dương
+* Số âm, số dương, số thập phân
 * Chữ số lên tới hàng tỉ tỉ
 * Độ dài không giới hạn (chỉ cần thêm các lớp khác cao hơn tỉ tỉ)
 * Các tùy chọn khác như đơn vị tính, dấu phân tách, bỏ qua phần 000 ở giữa
-
-Tuy nhiên API vẫn chưa hỗ trợ đọc số thập phân, sẽ được cải tiến sau.
 
 ### API
 
