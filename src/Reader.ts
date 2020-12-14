@@ -81,7 +81,8 @@ function readThreeDigits(a: number, b: number, c: number, readZeroHundred: boole
 function parseNumberData(numberStr: string): INumberData {
     // Remove negative sign
     let isNegative: boolean = numberStr[0] == NEGATIVE_SIGN;
-    let rawStr = (isNegative) ? numberStr.substr(1) : numberStr;
+    let rawStr: string = (isNegative) ? numberStr.substring(1) : numberStr;
+    let pointPos: number = rawStr.indexOf(POINT_SIGN);
 
     // Remove leading 0s
     let pos: number = 0;
@@ -89,14 +90,16 @@ function parseNumberData(numberStr: string): INumberData {
         pos++;
     rawStr = rawStr.substring(pos);
 
-    // Remove trailing 0s
-    let lastPos = rawStr.length - 1;
-    while (rawStr[lastPos] == FILLED_DIGIT)
-        lastPos--;
-    rawStr = rawStr.substring(0, lastPos + 1);
+    // Remove trailing 0s (if has point)
+    if (pointPos != -1) {
+        let lastPos: number = rawStr.length - 1;
+        while (rawStr[lastPos] == FILLED_DIGIT)
+            lastPos--;
+        rawStr = rawStr.substring(0, lastPos + 1);
+    }
 
     // Count 0s to add
-    let pointPos: number = rawStr.indexOf(POINT_SIGN);
+    pointPos = rawStr.indexOf(POINT_SIGN);
     let beforePointLength: number = (pointPos == -1)
         ? rawStr.length : pointPos;
     let needZeroCount: number = 0;
@@ -105,7 +108,7 @@ function parseNumberData(numberStr: string): INumberData {
         needZeroCount = DIGITS_PER_PART - modZeroCount;
 
     // Add leading 0s to fit parts
-    let fullStr = '';
+    let fullStr: string = '';
     let i: number;
     for (i = 0; i < needZeroCount; i++)
         fullStr += FILLED_DIGIT;
@@ -118,7 +121,7 @@ function parseNumberData(numberStr: string): INumberData {
 
     pointPos = fullStr.indexOf(POINT_SIGN);
     for (i = 0; i < fullStr.length; i++)
-        if (fullStr[i] != POINT_SIGN) {
+        if (i != pointPos) {
             digit = parseInt(fullStr[i]);
             if (isNaN(digit))
                 throw new Error(INVALID_NUMBER);

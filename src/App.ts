@@ -7,7 +7,7 @@ import Logger from './Logger';
 import ReadRouter from './ReadRouter';
 
 // Init
-const App = express();
+const App: any = express();
 dotenv.config();
 
 // Security
