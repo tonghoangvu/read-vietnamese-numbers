@@ -15,9 +15,9 @@ const DEFAULT_UNIT: string = 'đơn vị';
 
 ReadRouter.get('/read', function (req: express.Request, res: express.Response) {
     // Read query params
-    const paramNumber = req.query[NUMBER_QUERY_PARAM];
-    const paramSeparator = req.query[SEPARATOR_QUERY_PARAM];
-    const paramUnit = req.query[UNIT_QUERY_PARAM];
+    const paramNumber: any = req.query[NUMBER_QUERY_PARAM];
+    const paramSeparator: any = req.query[SEPARATOR_QUERY_PARAM];
+    const paramUnit: any = req.query[UNIT_QUERY_PARAM];
 
     // Required params
     if (!paramNumber)
