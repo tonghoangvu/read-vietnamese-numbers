@@ -6,6 +6,9 @@
   "repository": "https://github.com/tonghoangvu/read-vietnamese-numbers.git",
   "author": "tonghoangvu <tonghoangvu@outlook.com>",
   "license": "UNLICENSED",
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com"
+  },
   "scripts": {
     "dev": "ts-node-dev --ignore-watch node_modules src/App.ts",
     "start": "ts-node src/App.ts"
