@@ -1,5 +1,7 @@
-export default interface INumberData {
+interface INumberData {
     isNegative: boolean;
     digits: number[];
-    digitsAfterPoint: number[]
+    digitsAfterPoint: number[];
 }
+
+export default INumberData;

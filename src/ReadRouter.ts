@@ -6,26 +6,21 @@ import Reader from './reader/Reader';
 
 const ReadRouter: express.Router = express.Router();
 
-const NUMBER_QUERY_PARAM: string = 'number';
-const SEPARATOR_QUERY_PARAM: string = 'separator';
-const UNIT_QUERY_PARAM: string = 'unit';
+const NUMBER_QUERY_PARAM = 'number';
+const SEPARATOR_QUERY_PARAM = 'separator';
+const UNIT_QUERY_PARAM = 'unit';
 
 ReadRouter.get('/read', function (req: express.Request, res: express.Response) {
-    // Read query params
-    const paramNumber: any = req.query[NUMBER_QUERY_PARAM];
-    const paramSeparator: any = req.query[SEPARATOR_QUERY_PARAM];
-    const paramUnit: any = req.query[UNIT_QUERY_PARAM];
-
     // Required params
-    if (!paramNumber)
+    if (!req.query[NUMBER_QUERY_PARAM])
         return res.end();
-    const numberStr: string = paramNumber.toString();
+    const numberStr: string = req.query[NUMBER_QUERY_PARAM].toString();
 
     // Modify global config
-    if (paramSeparator)
-        Config.SEPARATOR = paramSeparator.toString();
-    if (paramUnit)
-        Config.UNIT = paramUnit.toString();
+    if (req.query[SEPARATOR_QUERY_PARAM])
+        Config.SEPARATOR = req.query[SEPARATOR_QUERY_PARAM].toString();
+    if (req.query[UNIT_QUERY_PARAM])
+        Config.UNIT = req.query[UNIT_QUERY_PARAM].toString();
 
     // Try parse to number data
     let numberData: INumberData;

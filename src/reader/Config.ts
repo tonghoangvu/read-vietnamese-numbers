@@ -50,6 +50,6 @@ const Config: IConfig = {
     FOUR_TONE_TEXT: 'tư',
     FIVE_TONE_TEXT: 'lăm',
     TEN_TONE_TEXT: 'mươi'
-}
+};
 
 export default Config;
