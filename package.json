@@ -1,26 +1,30 @@
 {
-  "name": "read-vietnamese-numbers",
-  "version": "1.0.0",
-  "description": "API đọc số thành chữ trong Tiếng Việt",
-  "main": "src/App.ts",
-  "repository": "https://github.com/tonghoangvu/read-vietnamese-numbers.git",
-  "author": "tonghoangvu <tonghoangvu@outlook.com>",
-  "license": "UNLICENSED",
-  "scripts": {
-    "dev": "ts-node-dev --ignore-watch node_modules src/App.ts",
-    "start": "ts-node src/App.ts"
-  },
-  "devDependencies": {
-    "@types/dotenv": "^8.2.0",
-    "@types/express": "^4.17.9",
-    "@types/node": "^14.14.12",
-    "ts-node": "^9.1.1",
-    "ts-node-dev": "^1.1.1",
-    "typescript": "^4.1.2"
-  },
-  "dependencies": {
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "helmet": "^4.2.0"
-  }
+    "name": "read-vietnamese-numbers",
+    "version": "1.0.0",
+    "description": "API đọc số thành chữ trong Tiếng Việt",
+    "main": "src/App.ts",
+    "repository": "https://github.com/tonghoangvu/read-vietnamese-numbers.git",
+    "author": "tonghoangvu <tonghoangvu@outlook.com>",
+    "license": "UNLICENSED",
+    "scripts": {
+        "dev": "ts-node-dev --ignore-watch node_modules src/App.ts",
+        "start": "ts-node src/App.ts",
+        "lint": "eslint src"
+    },
+    "devDependencies": {
+        "@types/dotenv": "^8.2.0",
+        "@types/express": "^4.17.9",
+        "@types/node": "^14.14.12",
+        "@typescript-eslint/eslint-plugin": "^4.10.0",
+        "@typescript-eslint/parser": "^4.10.0",
+        "eslint": "^7.16.0",
+        "ts-node": "^9.1.1",
+        "ts-node-dev": "^1.1.1",
+        "typescript": "^4.1.2"
+    },
+    "dependencies": {
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "helmet": "^4.2.0"
+    }
 }

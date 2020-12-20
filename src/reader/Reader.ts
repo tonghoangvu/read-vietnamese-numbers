@@ -2,7 +2,7 @@ import INumberData from './INumberData';
 import Config from './Config';
 
 function readTwoDigits(b: number, c: number, hasHundred: boolean): string[] {
-    let output: string[] = [];
+    const output: string[] = [];
 
     switch (b) {
         case 0: {
@@ -41,7 +41,7 @@ function readTwoDigits(b: number, c: number, hasHundred: boolean): string[] {
 }
 
 function readThreeDigits(a: number, b: number, c: number, readZeroHundred: boolean): string[] {
-    let output: string[] = [];
+    const output: string[] = [];
 
     // Read hundred even zero, apply for all parts, except the first part (on the left)
     if (a != 0 || readZeroHundred)
@@ -54,12 +54,12 @@ function readThreeDigits(a: number, b: number, c: number, readZeroHundred: boole
 
 function parseNumberData(numberStr: string): INumberData {
     // Remove negative sign
-    let isNegative: boolean = numberStr[0] == Config.NEGATIVE_SIGN;
+    const isNegative: boolean = numberStr[0] == Config.NEGATIVE_SIGN;
     let rawStr: string = (isNegative) ? numberStr.substring(1) : numberStr;
     let pointPos: number = rawStr.indexOf(Config.POINT_SIGN);
 
     // Remove leading 0s
-    let pos: number = 0;
+    let pos = 0;
     while (rawStr[pos] == Config.FILLED_DIGIT)
         pos++;
     rawStr = rawStr.substring(pos);
@@ -74,15 +74,15 @@ function parseNumberData(numberStr: string): INumberData {
 
     // Count 0s to add
     pointPos = rawStr.indexOf(Config.POINT_SIGN);
-    let beforePointLength: number = (pointPos == -1)
+    const beforePointLength: number = (pointPos == -1)
         ? rawStr.length : pointPos;
-    let needZeroCount: number = 0;
+    let needZeroCount = 0;
     const modZeroCount: number = beforePointLength % Config.DIGITS_PER_PART;
     if (modZeroCount != 0)
         needZeroCount = Config.DIGITS_PER_PART - modZeroCount;
 
     // Add leading 0s to fit parts
-    let fullStr: string = '';
+    let fullStr = '';
     let i: number;
     for (i = 0; i < needZeroCount; i++)
         fullStr += Config.FILLED_DIGIT;
@@ -90,15 +90,15 @@ function parseNumberData(numberStr: string): INumberData {
 
     // Parse digits
     let digit: number;
-    let digits: number[] = [];
-    let digitsAfterPoint: number[] = [];
+    const digits: number[] = [];
+    const digitsAfterPoint: number[] = [];
 
     pointPos = fullStr.indexOf(Config.POINT_SIGN);
     for (i = 0; i < fullStr.length; i++)
         if (i != pointPos) {
             digit = parseInt(fullStr[i]);
             if (isNaN(digit))
-                throw new Error("Số không hợp lệ");
+                throw new Error('Số không hợp lệ');
             if (pointPos == -1 || i < pointPos)
                 digits.push(digit);
             else
@@ -106,16 +106,16 @@ function parseNumberData(numberStr: string): INumberData {
         }
 
     // Building result
-    let result: INumberData = { isNegative, digits, digitsAfterPoint };
+    const result: INumberData = { isNegative, digits, digitsAfterPoint };
     return result;
 }
 
-function readVietnameseNumber(numberData: INumberData) {
-    let output: string[] = [];
+function readVietnameseNumber(numberData: INumberData): string {
+    const output: string[] = [];
 
     let i: number, a: number, b: number, c: number;
     let isFirstPart: boolean, isSinglePart: boolean;
-    let partCount: number = Math.round(numberData.digits.length / Config.DIGITS_PER_PART);
+    const partCount: number = Math.round(numberData.digits.length / Config.DIGITS_PER_PART);
 
     // Read before point digits
     for (i = 0; i < partCount; i++) {
@@ -154,4 +154,4 @@ function readVietnameseNumber(numberData: INumberData) {
 
 export default {
     readTwoDigits, readThreeDigits, parseNumberData, readVietnameseNumber
-}
+};
