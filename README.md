@@ -5,7 +5,7 @@
 API đọc số thành chữ trong Tiếng Việt.
 Bao gồm API được viết bằng NodeJS và TypeScript, cộng với một trang web đơn giản để demo. Tất cả đã được deploy lên VPS của tôi.
 
-Live demo: [http://103.110.84.48:8080/](http://103.110.84.48:8080/)
+Live demo: [http://103.110.84.48:3000/](http://103.110.84.48:3000/)
 
 ### Features
 
