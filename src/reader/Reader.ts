@@ -83,20 +83,18 @@ function parseNumberData(numberStr: string): INumberData {
 
     // Add leading 0s to fit parts
     let fullStr = '';
-    let i: number;
-    for (i = 0; i < needZeroCount; i++)
+    for (let i = 0; i < needZeroCount; i++)
         fullStr += Config.FILLED_DIGIT;
     fullStr += rawStr;
 
     // Parse digits
-    let digit: number;
     const digits: number[] = [];
     const digitsAfterPoint: number[] = [];
 
     pointPos = fullStr.indexOf(Config.POINT_SIGN);
-    for (i = 0; i < fullStr.length; i++)
+    for (let i = 0; i < fullStr.length; i++)
         if (i != pointPos) {
-            digit = parseInt(fullStr[i]);
+            const digit: number = parseInt(fullStr[i]);
             if (isNaN(digit))
                 throw new Error('Số không hợp lệ');
             if (pointPos == -1 || i < pointPos)
@@ -112,19 +110,16 @@ function parseNumberData(numberStr: string): INumberData {
 
 function readVietnameseNumber(numberData: INumberData): string {
     const output: string[] = [];
-
-    let i: number, a: number, b: number, c: number;
-    let isFirstPart: boolean, isSinglePart: boolean;
     const partCount: number = Math.round(numberData.digits.length / Config.DIGITS_PER_PART);
 
     // Read before point digits
-    for (i = 0; i < partCount; i++) {
-        a = numberData.digits[i * Config.DIGITS_PER_PART];
-        b = numberData.digits[i * Config.DIGITS_PER_PART + 1];
-        c = numberData.digits[i * Config.DIGITS_PER_PART + 2];
+    for (let i = 0; i < partCount; i++) {
+        const a: number = numberData.digits[i * Config.DIGITS_PER_PART];
+        const b: number = numberData.digits[i * Config.DIGITS_PER_PART + 1];
+        const c: number = numberData.digits[i * Config.DIGITS_PER_PART + 2];
 
-        isFirstPart = i == 0;
-        isSinglePart = partCount == 1;
+        const isFirstPart: boolean = i == 0;
+        const isSinglePart: boolean = partCount == 1;
         if (a != 0 || b != 0 || c != 0 || isSinglePart)
             output.push(
                 ...readThreeDigits(a, b, c, !isFirstPart),
@@ -135,11 +130,11 @@ function readVietnameseNumber(numberData: INumberData): string {
     if (numberData.digitsAfterPoint.length != 0) {
         output.push(Config.POINT_TEXT);
         if (numberData.digitsAfterPoint.length == 2) {
-            b = numberData.digitsAfterPoint[0];
-            c = numberData.digitsAfterPoint[1];
+            const b: number = numberData.digitsAfterPoint[0];
+            const c: number = numberData.digitsAfterPoint[1];
             output.push(...readTwoDigits(b, c, false));
         } else
-            for (i = 0; i < numberData.digitsAfterPoint.length; i++)
+            for (let i = 0; i < numberData.digitsAfterPoint.length; i++)
                 output.push(Config.DIGITS[numberData.digitsAfterPoint[i]]);
     }
 

@@ -1,15 +1,15 @@
 {
     "compilerOptions": {
-      "sourceMap": true,
-      "target": "es6",
-      "outDir": "./dist",
-      "baseUrl": "./src",
-      "moduleResolution": "node"
+        "sourceMap": true,
+        "target": "es6",
+        "outDir": "./dist",
+        "baseUrl": "./src",
+        "moduleResolution": "node"
     },
     "include": [
-      "src/**/*.ts"
+        "src/**/*.ts"
     ],
     "exclude": [
-      "node_modules"
+        "node_modules"
     ]
-  }
+}

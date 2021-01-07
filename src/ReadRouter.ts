@@ -10,7 +10,7 @@ const NUMBER_QUERY_PARAM = 'number';
 const SEPARATOR_QUERY_PARAM = 'separator';
 const UNIT_QUERY_PARAM = 'unit';
 
-ReadRouter.get('/read', function (req: express.Request, res: express.Response) {
+ReadRouter.get('/read', (req: express.Request, res: express.Response) => {
     // Required params
     if (!req.query[NUMBER_QUERY_PARAM])
         return res.end();
@@ -23,18 +23,13 @@ ReadRouter.get('/read', function (req: express.Request, res: express.Response) {
         Config.UNIT = req.query[UNIT_QUERY_PARAM].toString();
 
     // Try parse to number data
-    let numberData: INumberData;
     try {
-        numberData = Reader.parseNumberData(numberStr);
+        const numberData: INumberData = Reader.parseNumberData(numberStr);
+        const result: string = Reader.readVietnameseNumber(numberData);
+        return res.json({ text: result });
     } catch (e) {
         return res.status(400).json({ error: e.message });
     }
-
-    // Generate result
-    const result: string = Reader.readVietnameseNumber(numberData);
-
-    // Return JSON
-    return res.json({ text: result });
 });
 
 export default ReadRouter;

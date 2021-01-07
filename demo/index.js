@@ -2,7 +2,6 @@
 const numberElem = document.getElementById('numberElem');
 const separatorElem = document.getElementById('separatorElem');
 const unitElem = document.getElementById('unitElem');
-
 const readElem = document.getElementById('readElem');
 const outputElem = document.getElementById('outputElem');
 
@@ -14,7 +13,7 @@ readElem.addEventListener('click', reload);
 
 // Functions
 
-function loadInput() {
+function loadInputData() {
     return {
         number: numberElem.value,
         separator: separatorElem.value,
@@ -22,55 +21,48 @@ function loadInput() {
     }
 }
 
-function isInputValid(input) {
-    // Required fields must be filled
-    if (!input.number)
+function isInputDataValid(inputData) {
+    // Required fields
+    if (!inputData.number)
         return false;
     return true;
 }
 
-function buildQueryParams(data) {
-    let output = [];
+function buildQueryParams(inputData) {
+    let queryParams = [];
 
-    // Don't check these fields (always included)
-    output.push('number=' + data.number);
+    // Required params
+    queryParams.push('number=' + inputData.number);
 
-    // Check not empty (they have default values)
-    if (data.separator)
-        output.push('separator=' + data.separator);
-    if (data.unit)
-        output.push('unit=' + data.unit);
+    // Optional params (have default values)
+    if (inputData.separator)
+        queryParams.push('separator=' + inputData.separator);
+    if (inputData.unit)
+        queryParams.push('unit=' + inputData.unit);
 
-    return '?' + output.join('&');
+    return '?' + queryParams.join('&');
 }
 
 function reload() {
-    const data = loadInput();
-
-    // Only fetch API when input is valid
-    if (!isInputValid(data))
+    // Prepare request data
+    const inputData = loadInputData();
+    if (!isInputDataValid(inputData))
         return;
+    const queryParams = buildQueryParams(inputData);
 
-    const query = buildQueryParams(data);
-
+    // Call API
     let result = '';
-    let isError = false;
-    fetch('/read' + query)
+    let failed = false;
+    fetch('/read' + queryParams)
         .then(response => {
-            isError = !response.ok;
+            failed = !response.ok;
             return response.json();
         })
-        .then(jsonObj => {
-            if (!isError)
-                result = jsonObj.text;
-            else
-                result = jsonObj.error;
+        .then(parsedJSON => {
+            result = failed ? parsedJSON.error : parsedJSON.text;
         })
         .finally(() => {
-            if (isError)
-                outputElem.style.color = 'red';
-            else
-                outputElem.style.color = '';
+            outputElem.style.color = failed ? 'red' : '';
             outputElem.innerText = result;
         });
 }
