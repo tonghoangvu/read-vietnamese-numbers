@@ -1,3 +1,5 @@
+'use strict';
+
 interface IConfig {
     SEPARATOR: string;
     UNIT: string;

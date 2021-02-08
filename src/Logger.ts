@@ -1,3 +1,5 @@
+'use strict';
+
 import * as express from 'express';
 
 function Logger(req: express.Request, res: express.Response, next: () => void): void {

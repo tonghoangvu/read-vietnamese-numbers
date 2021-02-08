@@ -1,3 +1,5 @@
+'use strict';
+
 import * as path from 'path';
 import * as core from 'express-serve-static-core';
 import * as express from 'express';

@@ -1,3 +1,5 @@
+'use strict';
+
 interface INumberData {
     isNegative: boolean;
     digits: number[];

@@ -1,3 +1,5 @@
+'use strict';
+
 import INumberData from './INumberData';
 import Config from './Config';
 
@@ -6,7 +8,7 @@ function readTwoDigits(b: number, c: number, hasHundred: boolean): string[] {
 
     switch (b) {
         case 0: {
-            if (hasHundred && c == 0)
+            if (hasHundred && c === 0)
                 break;
             if (hasHundred)
                 output.push(Config.ODD_TEXT);
@@ -16,7 +18,7 @@ function readTwoDigits(b: number, c: number, hasHundred: boolean): string[] {
 
         case 1: {
             output.push(Config.TEN_TEXT);
-            if (c == 5)
+            if (c === 5)
                 output.push(Config.FIVE_TONE_TEXT);
             else if (c != 0)
                 output.push(Config.DIGITS[c]);
@@ -25,11 +27,11 @@ function readTwoDigits(b: number, c: number, hasHundred: boolean): string[] {
 
         default: {
             output.push(Config.DIGITS[b], Config.TEN_TONE_TEXT);
-            if (c == 1)
+            if (c === 1)
                 output.push(Config.ONE_TONE_TEXT);
-            else if (c == 4 && b != 4)
+            else if (c === 4 && b != 4)
                 output.push(Config.FOUR_TONE_TEXT);
-            else if (c == 5)
+            else if (c === 5)
                 output.push(Config.FIVE_TONE_TEXT);
             else if (c != 0)
                 output.push(Config.DIGITS[c]);
@@ -54,27 +56,27 @@ function readThreeDigits(a: number, b: number, c: number, readZeroHundred: boole
 
 function parseNumberData(numberStr: string): INumberData {
     // Remove negative sign
-    const isNegative: boolean = numberStr[0] == Config.NEGATIVE_SIGN;
+    const isNegative: boolean = numberStr[0] === Config.NEGATIVE_SIGN;
     let rawStr: string = (isNegative) ? numberStr.substring(1) : numberStr;
     let pointPos: number = rawStr.indexOf(Config.POINT_SIGN);
 
     // Remove leading 0s
     let pos = 0;
-    while (rawStr[pos] == Config.FILLED_DIGIT)
+    while (rawStr[pos] === Config.FILLED_DIGIT)
         pos++;
     rawStr = rawStr.substring(pos);
 
     // Remove trailing 0s (if has point)
     if (pointPos != -1) {
         let lastPos: number = rawStr.length - 1;
-        while (rawStr[lastPos] == Config.FILLED_DIGIT)
+        while (rawStr[lastPos] === Config.FILLED_DIGIT)
             lastPos--;
         rawStr = rawStr.substring(0, lastPos + 1);
     }
 
     // Count 0s to add
     pointPos = rawStr.indexOf(Config.POINT_SIGN);
-    const beforePointLength: number = (pointPos == -1)
+    const beforePointLength: number = (pointPos === -1)
         ? rawStr.length : pointPos;
     let needZeroCount = 0;
     const modZeroCount: number = beforePointLength % Config.DIGITS_PER_PART;
@@ -97,7 +99,7 @@ function parseNumberData(numberStr: string): INumberData {
             const digit: number = parseInt(fullStr[i]);
             if (isNaN(digit))
                 throw new Error('Số không hợp lệ');
-            if (pointPos == -1 || i < pointPos)
+            if (pointPos === -1 || i < pointPos)
                 digits.push(digit);
             else
                 digitsAfterPoint.push(digit);
@@ -118,8 +120,8 @@ function readVietnameseNumber(numberData: INumberData): string {
         const b: number = numberData.digits[i * Config.DIGITS_PER_PART + 1];
         const c: number = numberData.digits[i * Config.DIGITS_PER_PART + 2];
 
-        const isFirstPart: boolean = i == 0;
-        const isSinglePart: boolean = partCount == 1;
+        const isFirstPart: boolean = i === 0;
+        const isSinglePart: boolean = partCount === 1;
         if (a != 0 || b != 0 || c != 0 || isSinglePart)
             output.push(
                 ...readThreeDigits(a, b, c, !isFirstPart),
@@ -151,7 +153,7 @@ function readVietnameseNumber(numberData: INumberData): string {
         default: {
             // Read each digits sequential
             for (let i = 0; i < numberData.digitsAfterPoint.length; i++)
-            output.push(Config.DIGITS[numberData.digitsAfterPoint[i]]);
+                output.push(Config.DIGITS[numberData.digitsAfterPoint[i]]);
         }
     }
 

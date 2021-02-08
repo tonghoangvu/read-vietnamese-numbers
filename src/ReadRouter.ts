@@ -1,3 +1,5 @@
+'use strict';
+
 import * as express from 'express';
 
 import INumberData from './reader/INumberData';

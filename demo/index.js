@@ -1,3 +1,5 @@
+'use strict';
+
 // Get elements
 const numberElem = document.getElementById('numberElem');
 const separatorElem = document.getElementById('separatorElem');
