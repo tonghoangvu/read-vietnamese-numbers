@@ -127,15 +127,32 @@ function readVietnameseNumber(numberData: INumberData): string {
     }
 
     // Read after point digits
-    if (numberData.digitsAfterPoint.length != 0) {
+    if (numberData.digitsAfterPoint.length != 0)
         output.push(Config.POINT_TEXT);
-        if (numberData.digitsAfterPoint.length == 2) {
+    switch (numberData.digitsAfterPoint.length) {
+        case 0:
+            // Don't read
+            break;
+        case 1: case 2: {
+            // Read in group 2 digits
             const b: number = numberData.digitsAfterPoint[0];
             const c: number = numberData.digitsAfterPoint[1];
-            output.push(...readTwoDigits(b, c, false));
-        } else
+            output.push(...readTwoDigits(b, c, true));
+            break;
+        }
+        case 3: {
+            // Read in group 3 digits
+            const a: number = numberData.digitsAfterPoint[0];
+            const b: number = numberData.digitsAfterPoint[1];
+            const c: number = numberData.digitsAfterPoint[2];
+            output.push(...readThreeDigits(a, b, c, true));
+            break;
+        }
+        default: {
+            // Read each digits sequential
             for (let i = 0; i < numberData.digitsAfterPoint.length; i++)
-                output.push(Config.DIGITS[numberData.digitsAfterPoint[i]]);
+            output.push(Config.DIGITS[numberData.digitsAfterPoint[i]]);
+        }
     }
 
     // Add sign and units
