@@ -5,7 +5,7 @@
 API đọc số thành chữ trong Tiếng Việt.
 Bao gồm API được viết bằng NodeJS và TypeScript, cộng với một trang web đơn giản để demo. Tất cả đã được deploy lên VPS của tôi.
 
-Live demo: [http://103.110.84.48:3000/](http://103.110.84.48:3000/)
+Live demo: [http://tonghoangvu.xyz:3000/](http://tonghoangvu.xyz:3000/)
 
 ### Features
 
@@ -50,6 +50,8 @@ yarn run dev
 npm run start
 yarn run start
 ```
+
+Sau đó truy cập vào [http://localhost:3000](http://localhost:3000) để xem kết quả.
 
 ### Support
 
