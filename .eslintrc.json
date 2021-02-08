@@ -17,13 +17,10 @@
     ],
     "rules": {
         "no-debugger": "warn",
-        "max-len": [
-            "error",
+        "max-len": ["warn",
             { "code": 100, "ignoreUrls": true }
         ],
-        "indent": [
-            "error",
-            4,
+        "indent": ["warn", 4,
             {
                 "SwitchCase": 1,
                 "FunctionDeclaration": {
@@ -32,17 +29,17 @@
                 }
             }
         ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ]
+        "linebreak-style": ["warn", "unix"],
+        "quotes": ["warn", "single"],
+        "semi": ["warn", "always"],
+        "no-var": ["warn"],
+        "no-trailing-spaces": ["warn"],
+        "comma-dangle": ["warn", "never"],
+        "eol-last": ["warn", "always"],
+        "brace-style": ["warn", "1tbs", { "allowSingleLine": true }],
+        "prefer-const": ["warn"],
+        "no-multiple-empty-lines": ["warn"],
+        "space-in-parens": ["warn"],
+        "no-use-before-define": ["error"]
     }
 }
