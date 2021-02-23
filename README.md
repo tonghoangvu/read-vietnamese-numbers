@@ -47,7 +47,12 @@ yarn run dev
 **Step 3**: Chạy server trên VPS hoặc server (production)
 
 ```shell
+// npm
+npm run build
 npm run start
+
+// yarn
+yarn run build
 yarn run start
 ```
 
