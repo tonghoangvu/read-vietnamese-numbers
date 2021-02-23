@@ -1,13 +1,13 @@
 import request from 'supertest';
 import { App } from '../src/App';
-import http from 'http';
+import { Server } from 'http';
 import INumberData from '../src/reader/INumberData';
 import Reader from '../src/reader/Reader';
 
 const app = request(App);
 
 describe('Test Server Response',  () => {
-    let server: http.Server;
+    let server: Server;
     beforeAll(async() => {
         server = App.listen(3000);
     });

@@ -15,7 +15,7 @@ const UNIT_QUERY_PARAM = 'unit';
 ReadRouter.get('/read', (req: express.Request, res: express.Response) => {
     // Required params
     if (!req.query[NUMBER_QUERY_PARAM])
-        return res.end();
+        return res.status(400).json({ error: 'Missing "number" parameter' });
     const numberStr: string = req.query[NUMBER_QUERY_PARAM].toString();
 
     // Modify global config
