@@ -1,6 +1,6 @@
 'use strict';
 
-import * as express from 'express';
+import express from 'express';
 
 import INumberData from './reader/INumberData';
 import Config from './reader/Config';
