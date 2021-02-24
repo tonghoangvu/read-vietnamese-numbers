@@ -32,26 +32,38 @@ API có thêm các query param để tùy chỉnh kết quả trả về:
 
 **Step 1**: Cài đặt các dependency cần thiết (dùng NPM hoặc Yarn)
 
-```
+```shell
 npm install
 yarn install
 ```
 
 **Step 2**: Để chạy server trên môi trường test (local)
 
-```
+```shell
 npm run dev
 yarn run dev
 ```
 
 **Step 3**: Chạy server trên VPS hoặc server (production)
 
-```
+```shell
+// npm
+npm run build
 npm run start
+
+// yarn
+yarn run build
 yarn run start
 ```
 
 Sau đó truy cập vào [http://localhost:3000](http://localhost:3000) để xem kết quả.
+
+### TEST
+
+```shell
+npm run test:e2e
+yarn run test:e2e
+```
 
 ### Support
 
