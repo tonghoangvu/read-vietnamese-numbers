@@ -2,6 +2,8 @@
 
 ### Introduction
 
+Checkout version mới hơn, được deploy dưới dạng NPM package, có thể dùng được ngay tại https://github.com/tonghoangvu/read-vietnamese-number.
+
 API đọc số thành chữ trong Tiếng Việt.
 Bao gồm API được viết bằng NodeJS và TypeScript, cộng với một trang web đơn giản để demo. Tất cả đã được deploy lên VPS của tôi.
 
